@@ -34,14 +34,14 @@ def lispify_String(x):
 lispifiers = {
     bool       : lambda x: "T" if x else "NIL",
     type(None) : lambda x: "NIL",
-    int        : lambda x: str(x),
-    float      : lambda x: str(x),
+    int        : str,
+    float      : str,
     complex    : lambda x: "#C(" + lispify_aux(x.real) + " " + lispify_aux(x.imag) + ")",
     list       : lambda x: "#(" + " ".join(lispify_aux(elt) for elt in x) + ")",
     tuple      : lambda x: lispify_aux(List(*x)),
     # dict     : lambda x: TODO
-    Fraction   : lambda x: str(x),
-    str        : lambda x: x,
+    Fraction   : str,
+    str        : lambda x: "\"" + x.replace("\\", "\\\\").replace('"', '\\"')  + "\"",
     LispObject : lispify_LispObject,
     Cons       : lispify_Cons,
     String     : lispify_String,
